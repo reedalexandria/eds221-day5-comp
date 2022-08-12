@@ -1,0 +1,54 @@
+---
+title: "Unit test intro"
+format: html
+editor: visual
+---
+
+```{r}
+library(testthat)
+library(here)
+```
+
+```{r}
+mean_range <- function(df) {
+  col_means <- apply(X = df, MARGIN = 2, FUN = mean, na.rm = TRUE)  # Returns col means as a vector
+  col_mean_max <- max(col_means) # Looks for the maximum value in the vector
+  col_mean_min <- min(col_means) # Looks for the minimum value in the vector
+  print(c(col_mean_max, col_mean_min)) # Prints the vector with min and max
+}
+
+#Try it
+mean_range(mtcars) 
+```
+
+Testthat practice:
+
+```{r}
+expect_length(mean_range(mtcars), 2)
+```
+
+```{r}
+expect_true(mean_range(mtcars)[1] > mean_range(mtcars)[2])
+```
+
+```{r}
+expect_type(mean_range(mtcars), "numeric") #error because it is double not numeric
+
+expect_true(mean_range(mtcars), "character") #error because not true
+
+expect_error(mean_range(mtcars)) #did not throw an error 
+```
+
+## Source a script
+
+```{r}
+source(here::here("src", "food_cart_functions.R"))
+
+name_cart(food = "lasagna", animal = "giraffe")
+```
+
+```{r}
+source(here::here("src", "cork_oak_growth.R"))
+
+height_t2(height_t1 = 12, t1 = 3, t2 = 8)
+```
